@@ -1,4 +1,4 @@
 streamlit
 pandas
 plotly.express
-import pycountry_convert
+pycountry_convert
