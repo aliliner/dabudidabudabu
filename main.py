@@ -4,8 +4,8 @@ import plotly.express    as px
 import pycountry_convert as pc
 
 df         = pd.read_csv('HAC_2.csv')
-population = pd.read_csv('population.csv')
 df_w       = pd.read_csv('WAl.csv')
+population = pd.read_csv('population.csv')
 
 
 with st.echo(code_location='below'):
@@ -31,17 +31,13 @@ with st.echo(code_location='below'):
     df['code_2']    = df.apply(lambda row: change_to_alpha2(row['Country']),        axis = 1)
     df["Continent"] = df.apply(lambda row: change_code_to_continent(row['code_2']), axis = 1)
     df["Continent"] = df["Continent"].map(cont_names)
+    
     country_list    = sorted(df["Country"].tolist())
 
     df_p                         = pd.merge(df, population, left_on = "iso_alpha", right_on = 'CountryCode',
                                                              how    = "left",      sort     = False)
+    
     df_p['TotalConsumption_mln'] = df_p["Sum_PerCapita"].astype(float)*df_p["Y2016"].astype(float)/10**6
-
-
-
-
-
-
 
 
 
@@ -91,7 +87,6 @@ with st.echo(code_location='below'):
     Let's look at the relative distribution of alcohol consumption between countries. Let's limit ourselves to the three 
     most popular categories: wine, beer and spirit.
     """)
-
 
 
     st.subheader("Popularity of wine, beer and spirit among countries")
@@ -276,7 +271,7 @@ with st.echo(code_location='below'):
                                 hover_name = "Country",
                                 opacity    = 0.8,
                                 size       = [8],
-                                title      ="Map of alcohol preferences of the selected country",
+                                title      = "Map of alcohol preferences of the selected country",
                                 labels     = {"Beer_PerCapita"  : "Beer",
                                               "Spirit_PerCapita": "Spirit",
                                               "Wine_PerCapita"  : "Wine"},
@@ -326,13 +321,12 @@ with st.echo(code_location='below'):
         df_agr = pd.DataFrame(columns = data.columns)
 
         for i in data["Year"].unique():
-            df_tmp = data[data.Year == i].sort_values(by=['TotAl_PerCapita'], ascending = False).head(n_top_rows)
+            df_tmp = data[data.Year == i].sort_values(by = ['TotAl_PerCapita'], ascending = False).head(n_top_rows)
             df_agr = df_agr.append(df_tmp, ignore_index = True)
 
         return df_agr
 
     sorted_data = query_top_rows_per_year(df_w, n_top)
-
 
     anim_pl = px.bar(sorted_data, x = "TotAl_PerCapita", y = "Entity",
                                   animation_frame = "Year",
