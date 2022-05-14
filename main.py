@@ -3,9 +3,9 @@ import pandas            as pd
 import plotly.express    as px
 import pycountry_convert as pc
 
-df         = pd.read_csv(r'C:\Users\lizzie\Desktop\HAC_2.csv')
-population = pd.read_csv(r'C:\Users\lizzie\Desktop\population.csv')
-df_w       = pd.read_csv(r'C:\Users\lizzie\Desktop\WAl.csv')
+df         = pd.read_csv('HAC_2.csv')
+population = pd.read_csv('population.csv')
+df_w       = pd.read_csv('WAl.csv')
 
 
 with st.echo(code_location='below'):
